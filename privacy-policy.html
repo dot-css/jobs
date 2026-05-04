@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy - HiringAgent</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2305080f'/><path d='M9 12h14v13H9z' fill='none' stroke='%2300e5a0' stroke-width='2.5' stroke-linejoin='round'/><path d='M12 12V9a4 4 0 018 0v3' fill='none' stroke='%2300e5a0' stroke-width='2.5' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05080f;--s1:#090e1a;--s2:#0d1525;--s3:#111d30;--border:rgba(255,255,255,0.06);--bh:rgba(255,255,255,0.11);--accent:#00e5a0;--ag:rgba(0,229,160,0.15);--al:#4dffc3;--red:#ff6b6b;--text:#f0f4ff;--t2:#8892a4;--t3:#3d4a5c;--r:10px;--rl:16px;--tr:0.2s cubic-bezier(0.4,0,0.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;}
+.noise{position:fixed;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.glow{position:fixed;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(0,229,160,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,8,15,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.nav-brand svg{width:28px;height:28px}
+.nav-brand span{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.25rem}
+.nav-link{padding:.5rem .875rem;font-size:.82rem;font-weight:500;color:var(--t2);text-decoration:none;border-radius:8px;transition:var(--tr);letter-spacing:.01em;font-family:'Cabinet Grotesk',sans-serif}
+.nav-link:hover{color:var(--text);background:rgba(255,255,255,.05)}
+
+/* Legal Page Specific Styles */
+.legal-wrap { padding: 120px 1.5rem 4rem; min-height: 100vh; display: flex; justify-content: center; position: relative; z-index: 1; }
+.legal-content { max-width: 800px; width: 100%; background: var(--s1); border: 1px solid var(--border); border-radius: var(--rl); padding: 3rem; position: relative; user-select: text; -webkit-user-select: text; }
+.legal-content::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+.legal-title { font-family: 'Clash Display', sans-serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 0.5rem; color: var(--text); letter-spacing: -0.02em; }
+.legal-date { font-size: 0.85rem; color: var(--accent); margin-bottom: 2.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.legal-content h2 { font-family: 'Clash Display', sans-serif; font-size: 1.25rem; font-weight: 600; margin: 2.5rem 0 1rem; color: var(--text); }
+.legal-content p, .legal-content li { font-size: 0.95rem; line-height: 1.7; color: var(--t2); margin-bottom: 1rem; font-weight: 300; }
+.legal-content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+.legal-content li::marker { color: var(--accent); }
+.legal-content a { color: var(--accent); text-decoration: none; transition: var(--tr); }
+.legal-content a:hover { filter: brightness(1.2); text-decoration: underline; }
+
+footer{text-align:center;padding:3rem 1.5rem;position:relative;z-index:1;border-top:1px solid var(--border)}
+.footer-inner{max-width:700px;margin:0 auto}
+.footer-brand{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.5rem}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:.78rem;color:var(--t3);line-height:1.7;margin-bottom:1.5rem}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.footer-links a{font-size:.78rem;color:var(--t2);text-decoration:none;transition:color var(--tr)}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-size:.72rem;color:var(--t3)}
+
+@media(max-width:700px){ .legal-content { padding: 1.5rem; } }
+</style>
+</head>
+<body oncopy="return false;" oncut="return false;" onpaste="return false;">
+<div class="noise"></div>
+<div class="glow"></div>
+
+<nav>
+  <a class="nav-brand" href="/">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="8" fill="#05080f"/>
+      <path d="M9 12h14v13H9z" fill="none" stroke="#00e5a0" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M12 12V9a4 4 0 018 0v3" fill="none" stroke="#00e5a0" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <span>Hiring</span>Agent
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="/">Back to Home</a>
+  </div>
+</nav>
+
+<div class="legal-wrap">
+  <div class="legal-content">
+    <h1 class="legal-title">Privacy Policy</h1>
+    <p class="legal-date">Last Updated: May 2026</p>
+
+    <p>At HiringAgent, your privacy is our priority. This Privacy Policy outlines how we collect, use, and protect your information when you use our automated job application services.</p>
+
+    <h2>1. Information We Collect</h2>
+    <p>To provide our services, we collect the following types of information:</p>
+    <ul>
+      <li><strong>Personal Information:</strong> Name, phone number, email address, and physical location preferences.</li>
+      <li><strong>Professional Data:</strong> Your uploaded resume (PDF) and preferred job titles.</li>
+      <li><strong>Google Account Data:</strong> When you connect your Gmail via Google OAuth, we receive an access token that allows us to send emails on your behalf.</li>
+    </ul>
+
+    <h2>2. How We Use Google User Data</h2>
+    <p>Our app strictly requires the <code>https://www.googleapis.com/auth/gmail.send</code> scope. We use this <strong>exclusively</strong> to send automated job application emails and tailored cover letters to potential employers on your behalf.</p>
+    <ul>
+      <li>We <strong>do not</strong> read, modify, or delete your existing emails.</li>
+      <li>We <strong>do not</strong> access your contacts or use your email for any marketing purposes.</li>
+      <li>Your Google OAuth tokens are securely transmitted to our backend (n8n) solely for the purpose of executing your daily application runs.</li>
+    </ul>
+
+    <h2>3. How We Use Your Information</h2>
+    <p>Your resume and personal details are used exclusively to:</p>
+    <ul>
+      <li>Generate AI-written, personalized cover letters tailored to specific job postings.</li>
+      <li>Fill out necessary details required by employers.</li>
+      <li>Send you daily progress reports regarding the applications submitted.</li>
+    </ul>
+
+    <h2>4. Data Sharing and Selling</h2>
+    <p><strong>We do not sell your personal data.</strong> Your information is never shared with third-party marketers, data brokers, or advertisers. The only entities that receive your data are the prospective employers to whom applications are sent on your behalf.</p>
+
+    <h2>5. Data Retention & Deletion</h2>
+    <p>We retain your resume and preferences only for as long as your subscription is active. If you cancel your subscription, you may request the complete deletion of your data from our servers by contacting our support team via WhatsApp or email.</p>
+
+    <h2>6. Security</h2>
+    <p>We implement industry-standard security measures to protect your personal information and resume files from unauthorized access. However, please be aware that no method of transmission over the internet is 100% secure.</p>
+
+    <h2>7. Contact Us</h2>
+    <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:support@hiringagent.netlify.app">support@hiringagent.netlify.app</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Hiring</span>Agent</div>
+    <div class="footer-desc">Automated job applications for Pakistani professionals.</div>
+    <div class="footer-links">
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </div>
+    <div class="footer-copy">© 2026 HiringAgent. All rights reserved.</div>
+  </div>
+</footer>
+</body>
+</html>
