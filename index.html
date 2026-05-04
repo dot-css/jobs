@@ -2,156 +2,195 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HiringAgent - Apply Smarter</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HiringAgent – Automated Job Applications for Pakistani Professionals</title>
+<meta name="description" content="HiringAgent automates job applications on your behalf. Connect Gmail, upload resume, and we apply to hundreds of relevant jobs while you sleep.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="HiringAgent – Apply to Jobs Automatically">
+<meta property="og:description" content="AI-powered job application automation. We apply while you focus on interviews.">
+<meta property="og:url" content="https://hiringagent.netlify.app/">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://hiringagent.netlify.app/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2305080f'/><path d='M8 10h10a6 6 0 010 12H8V10z' fill='none' stroke='%2300e5a0' stroke-width='2.5' stroke-linecap='round'/><circle cx='22' cy='22' r='4' fill='%2300e5a0'/><path d='M20.5 22l1 1 2-2' stroke='%2305080f' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{--bg:#05080f;--s1:#090e1a;--s2:#0d1525;--s3:#111d30;--border:rgba(255,255,255,0.06);--bh:rgba(255,255,255,0.11);--accent:#00e5a0;--ag:rgba(0,229,160,0.15);--al:#4dffc3;--red:#ff6b6b;--text:#f0f4ff;--t2:#8892a4;--t3:#3d4a5c;--r:10px;--rl:16px;--tr:0.2s cubic-bezier(0.4,0,0.2,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-.noise{position:fixed;inset:0;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
-.glow{position:fixed;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(0,229,160,0.06) 0%,transparent 70%);pointer-events:none;z-index:0}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,8,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-brand{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-0.02em}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;user-select:text;-webkit-user-select:text}
+.noise{position:fixed;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.glow{position:fixed;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(0,229,160,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,8,15,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.nav-brand svg{width:28px;height:28px}
 .nav-brand span{color:var(--accent)}
-.nav-links{display:flex;align-items:center;gap:0.25rem}
-.nav-link{padding:0.5rem 0.875rem;font-size:0.82rem;font-weight:500;color:var(--t2);background:none;border:none;cursor:pointer;border-radius:8px;transition:var(--tr);letter-spacing:0.01em}
-.nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
-.nav-cta{padding:0.5rem 1rem;font-size:0.82rem;font-weight:700;color:#05080f;background:var(--accent);border:none;border-radius:8px;cursor:pointer;transition:var(--tr);font-family:'Cabinet Grotesk',sans-serif}
+.nav-links{display:flex;align-items:center;gap:.25rem}
+.nav-link{padding:.5rem .875rem;font-size:.82rem;font-weight:500;color:var(--t2);background:none;border:none;cursor:pointer;border-radius:8px;transition:var(--tr);letter-spacing:.01em;font-family:'Cabinet Grotesk',sans-serif}
+.nav-link:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav-cta{padding:.5rem 1rem;font-size:.82rem;font-weight:700;color:#05080f;background:var(--accent);border:none;border-radius:8px;cursor:pointer;transition:var(--tr);font-family:'Cabinet Grotesk',sans-serif}
 .nav-cta:hover{filter:brightness(1.1)}
-section{min-height:100vh;display:none;flex-direction:column;align-items:center;padding-top:60px;position:relative;z-index:1}
+section{display:none;flex-direction:column;align-items:center;padding-top:60px;position:relative;z-index:1}
 section.active{display:flex}
-#home{justify-content:center;padding:80px 1.5rem 3rem}
-.hero{text-align:center;max-width:680px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:0.4rem 0.875rem;background:var(--ag);border:1px solid rgba(0,229,160,0.25);border-radius:999px;font-size:0.75rem;font-weight:500;color:var(--accent);margin-bottom:1.75rem;letter-spacing:0.04em;text-transform:uppercase}
+#home{min-height:100vh;justify-content:flex-start;padding:0 1.5rem 4rem}
+.hero{text-align:center;max-width:700px;margin:0 auto;padding:5rem 0 2rem}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:.4rem .875rem;background:var(--ag);border:1px solid rgba(0,229,160,.25);border-radius:999px;font-size:.75rem;font-weight:500;color:var(--accent);margin-bottom:1.75rem;letter-spacing:.04em;text-transform:uppercase}
 .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
-.hero h1{font-family:'Clash Display',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;line-height:1.05;letter-spacing:-0.04em;margin-bottom:1.25rem;color:var(--text)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero h1{font-family:'Clash Display',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;line-height:1.05;letter-spacing:-.04em;margin-bottom:1.25rem;color:var(--text)}
 .hero h1 em{color:var(--accent);font-style:normal}
 .hero p{font-size:1.05rem;color:var(--t2);line-height:1.7;font-weight:300;margin-bottom:2.5rem;max-width:520px;margin-left:auto;margin-right:auto}
 .hero-btns{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.btn-hero{padding:0.875rem 2rem;font-family:'Clash Display',sans-serif;font-size:0.95rem;font-weight:600;border-radius:var(--r);cursor:pointer;transition:var(--tr);letter-spacing:0.01em}
-.btn-hero-primary{background:var(--accent);color:#05080f;border:none}
+.btn-hero{padding:.875rem 2rem;font-family:'Clash Display',sans-serif;font-size:.95rem;font-weight:600;border-radius:var(--r);cursor:pointer;transition:var(--tr);letter-spacing:.01em;border:none}
+.btn-hero-primary{background:var(--accent);color:#05080f}
 .btn-hero-primary:hover{filter:brightness(1.08);transform:translateY(-2px)}
 .btn-hero-secondary{background:none;border:1px solid var(--bh);color:var(--t2)}
 .btn-hero-secondary:hover{border-color:var(--accent);color:var(--accent)}
 .stats{display:flex;justify-content:center;gap:3rem;margin-top:4rem;flex-wrap:wrap}
 .stat{text-align:center}
-.stat-num{font-family:'Clash Display',sans-serif;font-size:1.8rem;font-weight:700;color:var(--text);letter-spacing:-0.03em}
+.stat-num{font-family:'Clash Display',sans-serif;font-size:1.8rem;font-weight:700;color:var(--text);letter-spacing:-.03em}
 .stat-num span{color:var(--accent)}
-.stat-label{font-size:0.78rem;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-top:4rem;max-width:680px;width:100%}
-.feature{padding:1.5rem;background:var(--s1)}
-.feature-icon{width:36px;height:36px;background:var(--ag);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:0.875rem}
-.feature-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none}
-.feature h3{font-family:'Clash Display',sans-serif;font-size:0.92rem;font-weight:600;margin-bottom:0.35rem;color:var(--text)}
-.feature p{font-size:0.78rem;color:var(--t2);line-height:1.5;font-weight:300}
-#pricing{justify-content:center;padding:80px 1.5rem 3rem}
+.stat-label{font-size:.78rem;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+.home-content{width:100%;max-width:960px;margin:0 auto}
+.steps-section{margin:5rem 0}
+.section-label{display:inline-block;font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
+.section-heading{font-family:'Clash Display',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;letter-spacing:-.03em;margin-bottom:.75rem}
+.section-desc{font-size:.95rem;color:var(--t2);font-weight:300;line-height:1.7;max-width:520px}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-top:2.5rem}
+.step-card{padding:2rem 1.5rem;background:var(--s1);position:relative}
+.step-num{font-family:'Clash Display',sans-serif;font-size:3rem;font-weight:700;color:rgba(0,229,160,.08);line-height:1;margin-bottom:.75rem}
+.step-card h3{font-family:'Clash Display',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
+.step-card p{font-size:.82rem;color:var(--t2);line-height:1.6;font-weight:300}
+.features-section{margin:3rem 0}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.feat-card{padding:1.5rem;background:var(--s1);border:1px solid var(--border);border-radius:var(--rl)}
+.feat-icon{width:40px;height:40px;background:var(--ag);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.feat-icon svg{width:20px;height:20px;stroke:var(--accent);fill:none}
+.feat-card h3{font-family:'Clash Display',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:.4rem}
+.feat-card p{font-size:.8rem;color:var(--t2);line-height:1.55;font-weight:300}
+.trust-section{margin:3rem 0;background:var(--s1);border:1px solid rgba(0,229,160,.15);border-radius:var(--rl);padding:2.5rem;position:relative;overflow:hidden}
+.trust-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1.5rem}
+.trust-item{display:flex;gap:12px}
+.trust-icon{width:36px;height:36px;background:var(--ag);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trust-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none}
+.trust-item h4{font-size:.88rem;font-weight:600;margin-bottom:.3rem}
+.trust-item p{font-size:.78rem;color:var(--t2);line-height:1.55;font-weight:300}
+#pricing{min-height:100vh;justify-content:center;padding:80px 1.5rem 3rem}
 .pricing-wrap{max-width:460px;width:100%;text-align:center}
-.pricing-tag{display:inline-flex;align-items:center;gap:8px;padding:0.4rem 0.875rem;background:rgba(255,200,50,0.08);border:1px solid rgba(255,200,50,0.2);border-radius:999px;font-size:0.75rem;font-weight:500;color:#fcd34d;margin-bottom:1.5rem;letter-spacing:0.04em;text-transform:uppercase}
-.pricing-wrap h2{font-family:'Clash Display',sans-serif;font-size:2.2rem;font-weight:700;letter-spacing:-0.04em;margin-bottom:0.5rem}
-.pricing-wrap>p{font-size:0.9rem;color:var(--t2);margin-bottom:2.5rem;font-weight:300}
-.plan-card{background:var(--s1);border:1px solid rgba(0,229,160,0.3);border-radius:var(--rl);padding:2rem;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(0,229,160,0.06)}
+.pricing-tag{display:inline-flex;align-items:center;gap:8px;padding:.4rem .875rem;background:rgba(255,200,50,.08);border:1px solid rgba(255,200,50,.2);border-radius:999px;font-size:.75rem;font-weight:500;color:#fcd34d;margin-bottom:1.5rem;letter-spacing:.04em;text-transform:uppercase}
+.pricing-wrap h2{font-family:'Clash Display',sans-serif;font-size:2.2rem;font-weight:700;letter-spacing:-.04em;margin-bottom:.5rem}
+.pricing-wrap>p{font-size:.9rem;color:var(--t2);margin-bottom:2.5rem;font-weight:300}
+.plan-card{background:var(--s1);border:1px solid rgba(0,229,160,.3);border-radius:var(--rl);padding:2rem;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(0,229,160,.06)}
 .plan-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
-.plan-badge{display:inline-block;padding:0.3rem 0.875rem;background:var(--accent);color:#05080f;border-radius:999px;font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:1.25rem}
-.plan-price{font-family:'Clash Display',sans-serif;font-size:3.5rem;font-weight:700;color:var(--text);letter-spacing:-0.05em;line-height:1;margin-bottom:0.25rem}
+.plan-badge{display:inline-block;padding:.3rem .875rem;background:var(--accent);color:#05080f;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.25rem}
+.plan-price{font-family:'Clash Display',sans-serif;font-size:3.5rem;font-weight:700;color:var(--text);letter-spacing:-.05em;line-height:1;margin-bottom:.25rem}
 .plan-price sub{font-size:1.2rem;font-weight:500;color:var(--t2);vertical-align:baseline}
 .plan-price sup{font-size:1.2rem;font-weight:600;color:var(--t2);vertical-align:super}
-.plan-period{font-size:0.82rem;color:var(--t2);margin-bottom:1.75rem}
-.plan-features{list-style:none;text-align:left;margin-bottom:1.75rem;display:flex;flex-direction:column;gap:0.75rem}
-.plan-features li{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--t2)}
-.plan-features li::before{content:'';width:18px;height:18px;background:var(--ag);border:1px solid rgba(0,229,160,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%2300e5a0' stroke-width='2.5' stroke-linecap='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:11px}
-.btn-plan{width:100%;padding:0.9rem;font-family:'Clash Display',sans-serif;font-size:1rem;font-weight:600;background:var(--accent);color:#05080f;border:none;border-radius:var(--r);cursor:pointer;transition:var(--tr);letter-spacing:0.01em}
+.plan-period{font-size:.82rem;color:var(--t2);margin-bottom:1.75rem}
+.plan-features{list-style:none;text-align:left;margin-bottom:1.75rem;display:flex;flex-direction:column;gap:.75rem}
+.plan-features li{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--t2)}
+.plan-features li::before{content:'';width:18px;height:18px;background:var(--ag);border:1px solid rgba(0,229,160,.3);border-radius:50%;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%2300e5a0' stroke-width='2.5' stroke-linecap='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:11px}
+.no-refund-notice{display:flex;gap:10px;padding:.875rem 1rem;background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);border-radius:8px;text-align:left;margin-bottom:1.25rem;font-size:.78rem;color:#ff9999;line-height:1.55}
+.no-refund-notice svg{width:16px;height:16px;fill:#ff6b6b;flex-shrink:0;margin-top:1px}
+.btn-plan{width:100%;padding:.9rem;font-family:'Clash Display',sans-serif;font-size:1rem;font-weight:600;background:var(--accent);color:#05080f;border:none;border-radius:var(--r);cursor:pointer;transition:var(--tr);letter-spacing:.01em}
 .btn-plan:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1.25rem;font-size:0.78rem;color:var(--t3)}
-#apply{justify-content:center;padding:80px 1.5rem 3rem}
+.guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1.25rem;font-size:.78rem;color:var(--t3)}
+#apply{min-height:100vh;justify-content:center;padding:80px 1.5rem 3rem}
 .form-wrap{width:100%;max-width:480px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:var(--rl);padding:2rem;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,160,0.4),transparent)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,160,.4),transparent)}
 .progress-bar{display:flex;align-items:center;gap:6px;margin-bottom:2rem}
 .progress-step{display:flex;align-items:center;gap:6px;flex:1}
-.step-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:600;flex-shrink:0;border:1.5px solid var(--bh);color:var(--t3);background:var(--s2);transition:var(--tr)}
+.step-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;flex-shrink:0;border:1.5px solid var(--bh);color:var(--t3);background:var(--s2);transition:var(--tr)}
 .step-dot.active{background:var(--ag);border-color:var(--accent);color:var(--accent)}
 .step-dot.done{background:var(--accent);border-color:var(--accent);color:#05080f}
 .step-dot.done svg{width:11px;height:11px;stroke:#05080f;fill:none}
-.step-label{font-size:0.68rem;color:var(--t3);font-weight:400;white-space:nowrap;text-transform:uppercase;letter-spacing:0.04em}
+.step-label{font-size:.68rem;color:var(--t3);font-weight:400;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
 .step-label.active{color:var(--accent)}
 .step-line{flex:1;height:1px;background:var(--bh);transition:var(--tr)}
 .step-line.done{background:var(--accent)}
-.section-title{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;letter-spacing:-0.02em}
-.section-sub{font-size:0.8rem;color:var(--t2);font-weight:300;margin-bottom:1.5rem;line-height:1.5}
-.step{display:none}
-.step.active{display:block;animation:fadeUp 0.28s ease}
+.section-title{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.3rem;letter-spacing:-.02em}
+.section-sub{font-size:.8rem;color:var(--t2);font-weight:300;margin-bottom:1.5rem;line-height:1.5}
+.fstep{display:none}
+.fstep.active{display:block;animation:fadeUp .28s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.gmail-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:0.8rem 1.25rem;background:var(--s2);border:1px solid var(--bh);border-radius:var(--r);color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;transition:var(--tr)}
-.gmail-btn:hover{background:var(--s3);border-color:rgba(255,255,255,0.18)}
+.gmail-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:.8rem 1.25rem;background:var(--s2);border:1px solid var(--bh);border-radius:var(--r);color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:var(--tr)}
+.gmail-btn:hover{background:var(--s3);border-color:rgba(255,255,255,.18)}
 .gmail-btn svg{width:20px;height:20px;flex-shrink:0}
-.gmail-btn.connected{border-color:rgba(0,229,160,0.35);background:rgba(0,229,160,0.06)}
+.gmail-btn.connected{border-color:rgba(0,229,160,.35);background:rgba(0,229,160,.06)}
 .gmail-btn.connected .btn-text{color:var(--al)}
-.connected-badge{display:none;align-items:center;gap:8px;padding:0.6rem 0.875rem;background:rgba(0,229,160,0.07);border:1px solid rgba(0,229,160,0.2);border-radius:8px;margin-top:0.875rem;font-size:0.8rem;color:var(--al)}
+.connected-badge{display:none;align-items:center;gap:8px;padding:.6rem .875rem;background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.2);border-radius:8px;margin-top:.875rem;font-size:.8rem;color:var(--al)}
 .connected-badge.show{display:flex}
 .badge-dot2{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.divider{display:flex;align-items:center;gap:10px;margin:1.25rem 0;color:var(--t3);font-size:0.75rem}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.field{margin-bottom:0.875rem}
-.field label{display:block;font-size:0.72rem;font-weight:500;color:var(--t2);margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
+.field{margin-bottom:.875rem}
+.field label{display:block;font-size:.72rem;font-weight:500;color:var(--t2);margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase}
 .field label span{color:var(--accent)}
-.field input,.field select{width:100%;padding:0.7rem 0.875rem;background:var(--s2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:0.88rem;outline:none;transition:var(--tr);appearance:none}
+.field input,.field select{width:100%;padding:.7rem .875rem;background:var(--s2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:.88rem;outline:none;transition:var(--tr);appearance:none}
 .field input::placeholder{color:var(--t3);font-weight:300}
-.field input:focus,.field select:focus{border-color:rgba(0,229,160,0.45);background:var(--s3);box-shadow:0 0 0 3px rgba(0,229,160,0.07)}
+.field input:focus,.field select:focus{border-color:rgba(0,229,160,.45);background:var(--s3);box-shadow:0 0 0 3px rgba(0,229,160,.07)}
 .field input.error{border-color:var(--red)}
 .phone-row{display:flex;gap:0}
-.phone-prefix{padding:0.7rem 0.75rem;background:var(--s3);border:1px solid var(--border);border-right:none;border-radius:8px 0 0 8px;font-size:0.85rem;color:var(--t2);white-space:nowrap;display:flex;align-items:center;gap:5px}
+.phone-prefix{padding:.7rem .75rem;background:var(--s3);border:1px solid var(--border);border-right:none;border-radius:8px 0 0 8px;font-size:.85rem;color:var(--t2);white-space:nowrap;display:flex;align-items:center;gap:5px}
 .phone-row input{border-radius:0 8px 8px 0!important}
 .upload-zone{border:1.5px dashed var(--bh);border-radius:var(--r);padding:1.75rem 1.25rem;text-align:center;cursor:pointer;transition:var(--tr);position:relative;background:var(--s2)}
-.upload-zone:hover,.upload-zone.drag-over{border-color:rgba(0,229,160,0.45);background:rgba(0,229,160,0.03)}
-.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-icon{width:40px;height:40px;background:var(--s3);border:1px solid var(--bh);border-radius:9px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem}
+.upload-zone:hover,.upload-zone.drag-over{border-color:rgba(0,229,160,.45);background:rgba(0,229,160,.03)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{width:40px;height:40px;background:var(--s3);border:1px solid var(--bh);border-radius:9px;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem}
 .upload-icon svg{width:18px;height:18px;stroke:var(--t2);fill:none}
-.upload-text-main{font-size:0.88rem;font-weight:500;color:var(--text)}
-.upload-text-sub{font-size:0.75rem;color:var(--t3);margin-top:3px}
+.upload-text-main{font-size:.88rem;font-weight:500;color:var(--text)}
+.upload-text-sub{font-size:.75rem;color:var(--t3);margin-top:3px}
 .upload-text-sub span{color:var(--accent);font-weight:500}
-.file-preview{display:none;align-items:center;gap:9px;padding:0.65rem 0.875rem;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.2);border-radius:8px;margin-top:0.75rem}
+.file-preview{display:none;align-items:center;gap:9px;padding:.65rem .875rem;background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.2);border-radius:8px;margin-top:.75rem}
 .file-preview.show{display:flex}
-.file-preview-icon{width:32px;height:32px;background:rgba(0,229,160,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.file-preview-icon{width:32px;height:32px;background:rgba(0,229,160,.12);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .file-preview-icon svg{width:15px;height:15px;fill:var(--accent)}
-.file-preview-name{font-size:0.8rem;color:var(--al);font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-preview-name{font-size:.8rem;color:var(--al);font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .file-remove{background:none;border:none;color:var(--t3);cursor:pointer;font-size:1rem;padding:2px;transition:color var(--tr)}
 .file-remove:hover{color:var(--red)}
-.btn-primary{width:100%;padding:0.85rem 1.5rem;background:var(--accent);border:none;border-radius:var(--r);color:#05080f;font-family:'Clash Display',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:0.01em}
+.btn-primary{width:100%;padding:.85rem 1.5rem;background:var(--accent);border:none;border-radius:var(--r);color:#05080f;font-family:'Clash Display',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:.01em}
 .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.btn-primary:active{transform:scale(0.99)}
-.btn-primary:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-.btn-secondary{background:none;border:1px solid var(--bh);border-radius:var(--r);color:var(--t2);font-family:'Cabinet Grotesk',sans-serif;font-size:0.83rem;padding:0.65rem 1.1rem;cursor:pointer;transition:var(--tr)}
-.btn-secondary:hover{border-color:rgba(255,255,255,0.18);color:var(--text)}
+.btn-primary:active{transform:scale(.99)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-secondary{background:none;border:1px solid var(--bh);border-radius:var(--r);color:var(--t2);font-family:'Cabinet Grotesk',sans-serif;font-size:.83rem;padding:.65rem 1.1rem;cursor:pointer;transition:var(--tr)}
+.btn-secondary:hover{border-color:rgba(255,255,255,.18);color:var(--text)}
 .btn-row{display:flex;align-items:center;gap:9px;margin-top:1.25rem}
 .btn-row .btn-primary{flex:1}
-.form-error{font-size:0.75rem;color:var(--red);margin-top:4px}
-.spinner{width:16px;height:16px;border:2px solid rgba(5,8,15,0.3);border-top-color:#05080f;border-radius:50%;animation:spin 0.65s linear infinite}
+.form-error{font-size:.75rem;color:var(--red);margin-top:4px}
+.spinner{width:16px;height:16px;border:2px solid rgba(5,8,15,.3);border-top-color:#05080f;border-radius:50%;animation:spin .65s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-#payment-screen{display:none;animation:fadeUp 0.35s ease}
+#payment-screen{display:none;animation:fadeUp .35s ease}
 #payment-screen.show{display:block}
-.payment-icon{width:60px;height:60px;background:rgba(0,229,160,0.1);border:1.5px solid rgba(0,229,160,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+.payment-icon{width:60px;height:60px;background:rgba(0,229,160,.1);border:1.5px solid rgba(0,229,160,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
 .payment-icon svg{width:26px;height:26px;stroke:var(--accent);fill:none}
 @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.payment-screen-title{font-family:'Clash Display',sans-serif;font-size:1.25rem;font-weight:700;text-align:center;margin-bottom:0.4rem;letter-spacing:-0.02em}
-.payment-screen-sub{font-size:0.82rem;color:var(--t2);text-align:center;margin-bottom:1.75rem;font-weight:300;line-height:1.5}
+.payment-screen-title{font-family:'Clash Display',sans-serif;font-size:1.25rem;font-weight:700;text-align:center;margin-bottom:.4rem;letter-spacing:-.02em}
+.payment-screen-sub{font-size:.82rem;color:var(--t2);text-align:center;margin-bottom:1.75rem;font-weight:300;line-height:1.5}
 .payment-details{background:var(--s2);border:1px solid var(--bh);border-radius:var(--r);overflow:hidden;margin-bottom:1.25rem}
-.payment-row{display:flex;justify-content:space-between;align-items:center;padding:0.875rem 1rem;border-bottom:1px solid var(--border)}
+.payment-row{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1rem;border-bottom:1px solid var(--border)}
 .payment-row:last-child{border-bottom:none}
-.payment-label{font-size:0.72rem;color:var(--t3);text-transform:uppercase;letter-spacing:0.05em;font-weight:500}
-.payment-value{font-size:0.9rem;color:var(--text);font-weight:600;letter-spacing:0.01em}
-.payment-amount{background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.2);border-radius:var(--r);padding:1.25rem;text-align:center;margin-bottom:1.25rem}
-.payment-amount-label{font-size:0.72rem;color:var(--t2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.35rem}
-.payment-amount-value{font-family:'Clash Display',sans-serif;font-size:2.2rem;font-weight:700;color:var(--accent);letter-spacing:-0.04em}
-.payment-amount-sub{font-size:0.75rem;color:var(--t3);margin-top:2px}
-.payment-note{display:flex;gap:8px;padding:0.75rem;background:rgba(252,211,77,0.05);border:1px solid rgba(252,211,77,0.15);border-radius:8px;font-size:0.78rem;color:#fcd34d;line-height:1.5}
+.payment-label{font-size:.72rem;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.payment-value{font-size:.9rem;color:var(--text);font-weight:600;letter-spacing:.01em}
+.payment-amount{background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.2);border-radius:var(--r);padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.payment-amount-label{font-size:.72rem;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem}
+.payment-amount-value{font-family:'Clash Display',sans-serif;font-size:2.2rem;font-weight:700;color:var(--accent);letter-spacing:-.04em}
+.payment-amount-sub{font-size:.75rem;color:var(--t3);margin-top:2px}
+.payment-note{display:flex;gap:8px;padding:.75rem;background:rgba(252,211,77,.05);border:1px solid rgba(252,211,77,.15);border-radius:8px;font-size:.78rem;color:#fcd34d;line-height:1.5;margin-bottom:1rem}
 .payment-note svg{width:14px;height:14px;fill:#fcd34d;flex-shrink:0;margin-top:1px}
-footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);line-height:1.8;position:relative;z-index:1}
-@media(max-width:580px){.field-row{grid-template-columns:1fr}.card{padding:1.25rem}.features{grid-template-columns:1fr}.hero h1{font-size:2.2rem}.plan-price{font-size:2.8rem}}
+.no-refund-box{display:flex;gap:8px;padding:.75rem;background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);border-radius:8px;font-size:.78rem;color:#ff9999;line-height:1.5;margin-bottom:1.25rem}
+.no-refund-box svg{width:14px;height:14px;fill:#ff6b6b;flex-shrink:0;margin-top:1px}
+footer{text-align:center;padding:3rem 1.5rem;position:relative;z-index:1;border-top:1px solid var(--border)}
+.footer-inner{max-width:700px;margin:0 auto}
+.footer-brand{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.5rem}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:.78rem;color:var(--t3);line-height:1.7;margin-bottom:1.5rem}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.footer-links a{font-size:.78rem;color:var(--t2);text-decoration:none;transition:color var(--tr)}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-size:.72rem;color:var(--t3)}
+@media(max-width:700px){.steps-grid,.features-grid,.trust-grid{grid-template-columns:1fr}.field-row{grid-template-columns:1fr}.card{padding:1.25rem}.hero h1{font-size:2.2rem}.plan-price{font-size:2.8rem}}
 </style>
 </head>
 <body>
@@ -159,17 +198,27 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
 <div class="glow"></div>
 
 <nav>
-  <a class="nav-brand" href="#"><span>Hiring</span>Agent</a>
+  <a class="nav-brand" href="#" onclick="showSection('home')">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="8" fill="#05080f"/>
+      <path d="M8 10h10a6 6 0 010 12H8V10z" fill="none" stroke="#00e5a0" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="22" cy="22" r="4" fill="#00e5a0"/>
+      <path d="M20.5 22l1 1 2-2" stroke="#05080f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Hiring</span>Agent
+  </a>
   <div class="nav-links">
     <button class="nav-link" onclick="showSection('home')">Home</button>
     <button class="nav-link" onclick="showSection('pricing')">Pricing</button>
+    <button class="nav-cta" onclick="showSection('apply')">Start Applying</button>
   </div>
 </nav>
 
 <section id="home" class="active">
   <div class="hero">
+    <div class="hero-badge"><div class="badge-dot"></div>AI-Powered Job Automation</div>
     <h1>We <em>Apply</em> to Jobs<br>While You Sleep</h1>
-    <p>Connect your Gmail, upload your resume, and let our AI agent handle hundreds of job applications tailored to your profile - automatically.</p>
+    <p>Connect your Gmail, upload your resume, and let our AI agent handle hundreds of personalized job applications — automatically, every day.</p>
     <div class="hero-btns">
       <button class="btn-hero btn-hero-primary" onclick="showSection('apply')">Start Applying Now</button>
       <button class="btn-hero btn-hero-secondary" onclick="showSection('pricing')">View Pricing</button>
@@ -177,13 +226,111 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
     <div class="stats">
       <div class="stat"><div class="stat-num">500<span>+</span></div><div class="stat-label">Applications Sent</div></div>
       <div class="stat"><div class="stat-num">3<span>x</span></div><div class="stat-label">More Interviews</div></div>
-      <div class="stat"><div class="stat-num">24<span>h</span></div><div class="stat-label">Response Time</div></div>
+      <div class="stat"><div class="stat-num">24<span>h</span></div><div class="stat-label">Setup Time</div></div>
+    </div>
+  </div>
+
+  <div class="home-content">
+    <div class="steps-section">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-heading">Three steps to more interviews</h2>
+      <p class="section-desc">Our system handles the entire application pipeline so you can focus on preparing for the offers that come in.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3>Submit Your Profile</h3>
+          <p>Enter your name, contact details, preferred job title, and location. Connect your Gmail account so we can send applications on your behalf.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3>We Find the Jobs</h3>
+          <p>Our AI scans job boards across Karachi, Lahore, Islamabad, and remote listings daily to find roles that match your skills and preferences.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3>Applications Go Out</h3>
+          <p>Personalized cover letters are generated and sent from your Gmail. You receive a daily log of every application submitted on your behalf.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <div class="section-label">Features</div>
+      <h2 class="section-heading">Everything you need to land your next role</h2>
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          <h3>AI Cover Letters</h3>
+          <p>Every application includes a tailored cover letter written by our AI based on your resume and the job description.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+          <h3>Resume Handling</h3>
+          <p>Upload your PDF resume once. We attach it automatically to every application and extract key details for personalization.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <h3>Location Filtering</h3>
+          <p>Target specific cities — Karachi, Lahore, Islamabad — or search nationwide for remote roles across any industry.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <h3>Daily Reports</h3>
+          <p>Receive a daily digest email summarizing every company applied to, roles targeted, and responses received — full transparency.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.07 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.29 6.29l1.28-1.28a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <h3>WhatsApp Support</h3>
+          <p>Priority support via WhatsApp. Our team is available to resolve issues, adjust your preferences, or pause your account anytime.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <h3>Unlimited Applications</h3>
+          <p>No caps, no limits. Our system applies to every matching job it finds each day for as long as your subscription is active.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust-section">
+      <div class="section-label">Trust &amp; Transparency</div>
+      <h2 class="section-heading">Your data is handled responsibly</h2>
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div>
+            <h4>Google OAuth 2.0 Security</h4>
+            <p>We request only the minimum Gmail permission needed: sending emails on your behalf. We cannot read, delete, or access any of your existing messages.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div>
+            <h4>No Data Selling — Ever</h4>
+            <p>Your personal information, resume, and Google account data are never sold, shared with advertisers, or used for any purpose beyond running your job applications.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <div>
+            <h4>Full Application Logs</h4>
+            <p>Every email sent from your account is logged and reported to you daily. You always know exactly what was sent, to whom, and when.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
+          <div>
+            <h4>Cancel Anytime</h4>
+            <p>There are no long-term contracts. You can cancel your subscription at any time and we will stop all application activity immediately upon request.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="pricing">
   <div class="pricing-wrap">
+    <div class="pricing-tag">💰 Simple Pricing</div>
     <h2>One Plan.<br>Unlimited Applications.</h2>
     <p>Everything you need to land your next job, at one flat monthly rate.</p>
     <div class="plan-card">
@@ -193,11 +340,15 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
       <ul class="plan-features">
         <li>Unlimited job applications per month</li>
         <li>AI-written, personalized cover letters</li>
-        <li>Gmail integration (send on your behalf)</li>
+        <li>Gmail integration — send on your behalf</li>
         <li>Daily application logs via email</li>
-        <li>Karachi, Lahore, Remote & more cities</li>
+        <li>Karachi, Lahore, Remote and more</li>
         <li>Priority support via WhatsApp</li>
       </ul>
+      <div class="no-refund-notice">
+        <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v4m0 4h.01"/></svg>
+        <span><strong>No Refund Policy:</strong> All payments are final. Once payment is sent, no refunds will be issued under any circumstances. Please review our <a href="/terms" style="color:#ff9999">Terms of Service</a> before subscribing.</span>
+      </div>
       <button class="btn-plan" onclick="showSection('apply')">Start Applying Today →</button>
     </div>
     <div class="guarantee">🔒 Secure payment · No hidden fees</div>
@@ -224,11 +375,11 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
         </div>
       </div>
 
-      <div class="step active" id="step1">
+      <div class="fstep active" id="fstep1">
         <div class="section-title">Connect your Gmail</div>
-        <div class="section-sub">We'll send job applications from your email. We only request permission to send emails — nothing else.</div>
+        <div class="section-sub">We'll send job applications from your email. We only request permission to send emails — we cannot read your inbox or access existing messages.</div>
         <button class="gmail-btn" id="gmailBtn" onclick="connectGmail()">
-          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M46.145 20.155H44V20H24v8h12.865C35.29 32.455 30.09 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.855-3.845z"/><path fill="#34A853" d="M6.305 14.691l6.571 4.819C14.655 15.108 19.001 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.305 14.691z"/><path fill="#FBBC05" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0124 36c-6.07 0-11.253-3.519-12.843-8.571l-6.522 5.025C7.505 39.556 15.227 44 24 44z"/><path fill="#EA4335" d="M46.145 20.155H44V20H24v8h12.865a12.021 12.021 0 01-4.084 5.571l.001-.001 6.19 5.238C38.671 39.205 46 34 46 24c0-1.341-.138-2.65-.855-3.845z"/></svg>
+          <svg viewBox="0 0 48 48"><path fill="#4285F4" d="M46.145 20.155H44V20H24v8h12.865C35.29 32.455 30.09 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.855-3.845z"/><path fill="#34A853" d="M6.305 14.691l6.571 4.819C14.655 15.108 19.001 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.305 14.691z"/><path fill="#FBBC05" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0124 36c-6.07 0-11.253-3.519-12.843-8.571l-6.522 5.025C7.505 39.556 15.227 44 24 44z"/><path fill="#EA4335" d="M46.145 20.155H44V20H24v8h12.865a12.021 12.021 0 01-4.084 5.571l.001-.001 6.19 5.238C38.671 39.205 46 34 46 24c0-1.341-.138-2.65-.855-3.845z"/></svg>
           <span class="btn-text">Continue with Gmail</span>
         </button>
         <div class="connected-badge" id="connectedBadge">
@@ -236,60 +387,34 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
           <span id="connectedEmail">Connected: user@gmail.com</span>
         </div>
         <div class="btn-row" style="margin-top:1.25rem">
-          <button class="btn-primary" id="nextStep1Btn" onclick="goToStep(2)" disabled>
-            Continue
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+          <button class="btn-primary" id="nextStep1Btn" onclick="goToFStep(2)" disabled>Continue <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
         </div>
       </div>
 
-      <div class="step" id="step2">
+      <div class="fstep" id="fstep2">
         <div class="section-title">Personal information</div>
         <div class="section-sub">Used on your applications and cover letters.</div>
         <div class="field-row">
-          <div class="field">
-            <label>First Name <span>*</span></label>
-            <input type="text" id="firstName" placeholder="Ali"/>
-            <div class="form-error" id="err-firstName"></div>
-          </div>
-          <div class="field">
-            <label>Last Name <span>*</span></label>
-            <input type="text" id="lastName" placeholder="Khan"/>
-            <div class="form-error" id="err-lastName"></div>
-          </div>
+          <div class="field"><label>First Name <span>*</span></label><input type="text" id="firstName" placeholder="Ali"/><div class="form-error" id="err-firstName"></div></div>
+          <div class="field"><label>Last Name <span>*</span></label><input type="text" id="lastName" placeholder="Khan"/><div class="form-error" id="err-lastName"></div></div>
         </div>
-        <div class="field">
-          <label>Email Address <span>*</span></label>
-          <input type="email" id="email" placeholder="ali@gmail.com"/>
-          <div class="form-error" id="err-email"></div>
-        </div>
+        <div class="field"><label>Email Address <span>*</span></label><input type="email" id="email" placeholder="ali@gmail.com"/><div class="form-error" id="err-email"></div></div>
         <div class="field">
           <label>Phone Number <span>*</span></label>
-          <div class="phone-row">
-            <div class="phone-prefix">🇵🇰 +92</div>
-            <input type="tel" id="phone" placeholder="3001234567" maxlength="10"/>
-          </div>
+          <div class="phone-row"><div class="phone-prefix">🇵🇰 +92</div><input type="tel" id="phone" placeholder="3001234567" maxlength="10"/></div>
           <div class="form-error" id="err-phone"></div>
         </div>
         <div class="btn-row">
-          <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
+          <button class="btn-secondary" onclick="goToFStep(1)">← Back</button>
           <button class="btn-primary" onclick="validateStep2()">Continue <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
         </div>
       </div>
 
-      <div class="step" id="step3">
-        <div class="section-title">Job preferences & resume</div>
+      <div class="fstep" id="fstep3">
+        <div class="section-title">Job preferences &amp; resume</div>
         <div class="section-sub">Tell us what roles to apply for and upload your CV.</div>
-        <div class="field">
-          <label>Job Title <span>*</span></label>
-          <input type="text" id="jobTitle" placeholder="e.g. Frontend Developer, Data Analyst"/>
-          <div class="form-error" id="err-jobTitle"></div>
-        </div>
-        <div class="field">
-          <label>Preferred City <span>*</span></label>
-          <input type="text" id="city" placeholder="e.g. Karachi, Lahore, Remote"/>
-          <div class="form-error" id="err-city"></div>
-        </div>
+        <div class="field"><label>Job Title <span>*</span></label><input type="text" id="jobTitle" placeholder="e.g. Frontend Developer, Data Analyst"/><div class="form-error" id="err-jobTitle"></div></div>
+        <div class="field"><label>Preferred City <span>*</span></label><input type="text" id="city" placeholder="e.g. Karachi, Lahore, Remote"/><div class="form-error" id="err-city"></div></div>
         <div class="field">
           <label>Upload Resume (PDF) <span>*</span></label>
           <div class="upload-zone" id="uploadZone">
@@ -306,11 +431,8 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
           <div class="form-error" id="err-resume"></div>
         </div>
         <div class="btn-row">
-          <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
-          <button class="btn-primary" id="submitBtn" onclick="submitForm()">
-            <span id="submitLabel">Submit & Pay</span>
-            <svg id="submitArrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
-          </button>
+          <button class="btn-secondary" onclick="goToFStep(2)">← Back</button>
+          <button class="btn-primary" id="submitBtn" onclick="submitForm()"><span id="submitLabel">Submit &amp; Pay</span><svg id="submitArrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></button>
         </div>
       </div>
 
@@ -324,177 +446,52 @@ footer{text-align:center;padding:2rem 1.5rem;font-size:0.73rem;color:var(--t3);l
           <div class="payment-amount-sub">Monthly subscription · Cancel anytime</div>
         </div>
         <div class="payment-details">
-          <div class="payment-row">
-            <span class="payment-label">Bank Name</span>
-            <span class="payment-value">Sadapay</span>
-          </div>
-          <div class="payment-row">
-            <span class="payment-label">Account Title</span>
-            <span class="payment-value">Saqib Shoaib</span>
-          </div>
-          <div class="payment-row">
-            <span class="payment-label">Account Number</span>
-            <span class="payment-value" style="color:var(--al);letter-spacing:0.04em">03102144393</span>
-          </div>
+          <div class="payment-row"><span class="payment-label">Bank Name</span><span class="payment-value">Sadapay</span></div>
+          <div class="payment-row"><span class="payment-label">Account Title</span><span class="payment-value">Saqib Shoaib</span></div>
+          <div class="payment-row"><span class="payment-label">Account Number</span><span class="payment-value" style="color:var(--al);letter-spacing:.04em">03102144393</span></div>
         </div>
-        <div class="payment-note">
-          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v4m0 4h.01"/></svg>
-          After transferring, send your payment screenshot to our WhatsApp. Your account will be activated within 2 hours.
-        </div>
-        <div style="margin-top:1.25rem">
-          <button class="btn-secondary" style="width:100%;text-align:center" onclick="resetForm()">Submit another application</button>
-        </div>
+        <div class="payment-note"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v4m0 4h.01"/></svg>After transferring, send your payment screenshot to our WhatsApp. Your account will be activated within 2 hours.</div>
+        <div class="no-refund-box"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v4m0 4h.01"/></svg><span><strong>No Refund Policy:</strong> All payments are final and non-refundable. By sending payment you agree to our Terms of Service.</span></div>
+        <button class="btn-secondary" style="width:100%;text-align:center" onclick="resetForm()">Submit another application</button>
       </div>
-
     </div>
   </div>
 </section>
 
-<footer>Secured with Google OAuth 2.0 &nbsp;·&nbsp;<br><strong>HiringAgent</strong></footer>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Hiring</span>Agent</div>
+    <div class="footer-desc">Automated job applications for Pakistani professionals.<br>We apply while you prepare for interviews.</div>
+    <div class="footer-links">
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="mailto:support@hiringagent.netlify.app">support@hiringagent.netlify.app</a>
+    </div>
+    <div class="footer-copy">© 2025 HiringAgent. All rights reserved.</div>
+  </div>
+</footer>
 
 <script>
 const GOOGLE_CLIENT_ID='1031080461036-ggmva3383uh17c4e7ihi92736je6ionf.apps.googleusercontent.com';
 const N8N_WEBHOOK_URL='https://n8n-aqvdvfnk.eu-central-1.clawcloudrun.com/webhook-test/job-apply';
 let gmailAccessToken=null,gmailUserEmail=null,resumeBase64=null,resumeFileName=null,currentStep=1;
 let tokenClient;
-
-function showSection(id){
-  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function initGoogleClient(){
-  if(typeof google==='undefined'){setTimeout(initGoogleClient,500);return;}
-  tokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:'https://www.googleapis.com/auth/gmail.send email profile',callback:handleGmailToken});
-}
-
-function connectGmail(){
-  if(tokenClient)tokenClient.requestAccessToken();
-  else alert('Google client not loaded yet. Please wait a moment and try again.');
-}
-
-function handleGmailToken(response){
-  if(response.error){console.error('OAuth error:',response.error);return;}
-  gmailAccessToken=response.access_token;
-  fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gmailAccessToken}})
-  .then(r=>r.json())
-  .then(info=>{
-    gmailUserEmail=info.email||'Gmail account';
-    document.getElementById('connectedEmail').textContent='✓ Connected: '+gmailUserEmail;
-    document.getElementById('connectedBadge').classList.add('show');
-    document.getElementById('gmailBtn').classList.add('connected');
-    document.querySelector('#gmailBtn .btn-text').textContent='Gmail connected';
-    if(info.email)document.getElementById('email').value=info.email;
-    document.getElementById('nextStep1Btn').disabled=false;
-  })
-  .catch(()=>{
-    gmailUserEmail='Gmail account';
-    document.getElementById('connectedBadge').classList.add('show');
-    document.getElementById('nextStep1Btn').disabled=false;
-  });
-}
-
-function goToStep(n){
-  document.getElementById('step'+currentStep).classList.remove('active');
-  currentStep=n;
-  document.getElementById('step'+n).classList.add('active');
-  updateProgress();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function updateProgress(){
-  for(let i=1;i<=3;i++){
-    const dot=document.getElementById('dot'+i),lbl=document.getElementById('lbl'+i);
-    dot.className='step-dot';lbl.className='step-label';
-    if(i<currentStep){dot.className+=' done';dot.innerHTML=`<svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>`;}
-    else if(i===currentStep){dot.className+=' active';dot.textContent=i;lbl.className+=' active';}
-    else{dot.textContent=i;}
-  }
-  for(let i=1;i<=2;i++)document.getElementById('line'+i).className='step-line'+(i<currentStep?' done':'');
-}
-
-function validateStep2(){
-  let ok=true;
-  const checks=[['firstName',v=>v.trim().length>0,'First name is required'],['lastName',v=>v.trim().length>0,'Last name is required'],['email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'Valid email required'],['phone',v=>/^\d{9,10}$/.test(v.trim()),'Enter 9-10 digit phone number']];
-  checks.forEach(([id,test,msg])=>{
-    const el=document.getElementById(id),err=document.getElementById('err-'+id);
-    if(!test(el.value)){el.classList.add('error');err.textContent=msg;ok=false;}
-    else{el.classList.remove('error');err.textContent='';}
-  });
-  if(ok)goToStep(3);
-}
-
+function showSection(id){document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function initGoogleClient(){if(typeof google==='undefined'){setTimeout(initGoogleClient,500);return;}tokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:'https://www.googleapis.com/auth/gmail.send email profile',callback:handleGmailToken});}
+function connectGmail(){if(tokenClient)tokenClient.requestAccessToken();else alert('Google client not loaded yet. Please wait a moment and try again.');}
+function handleGmailToken(response){if(response.error){console.error('OAuth error:',response.error);return;}gmailAccessToken=response.access_token;fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gmailAccessToken}}).then(r=>r.json()).then(info=>{gmailUserEmail=info.email||'Gmail account';document.getElementById('connectedEmail').textContent='✓ Connected: '+gmailUserEmail;document.getElementById('connectedBadge').classList.add('show');document.getElementById('gmailBtn').classList.add('connected');document.querySelector('#gmailBtn .btn-text').textContent='Gmail connected';if(info.email)document.getElementById('email').value=info.email;document.getElementById('nextStep1Btn').disabled=false;}).catch(()=>{gmailUserEmail='Gmail account';document.getElementById('connectedBadge').classList.add('show');document.getElementById('nextStep1Btn').disabled=false;});}
+function goToFStep(n){document.getElementById('fstep'+currentStep).classList.remove('active');currentStep=n;document.getElementById('fstep'+n).classList.add('active');updateProgress();window.scrollTo({top:0,behavior:'smooth'});}
+function updateProgress(){for(let i=1;i<=3;i++){const dot=document.getElementById('dot'+i),lbl=document.getElementById('lbl'+i);dot.className='step-dot';lbl.className='step-label';if(i<currentStep){dot.className+=' done';dot.innerHTML='<svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>';}else if(i===currentStep){dot.className+=' active';dot.textContent=i;lbl.className+=' active';}else{dot.textContent=i;}}for(let i=1;i<=2;i++)document.getElementById('line'+i).className='step-line'+(i<currentStep?' done':'');}
+function validateStep2(){let ok=true;const checks=[['firstName',v=>v.trim().length>0,'First name is required'],['lastName',v=>v.trim().length>0,'Last name is required'],['email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'Valid email required'],['phone',v=>/^\d{9,10}$/.test(v.trim()),'Enter 9-10 digit phone number']];checks.forEach(([id,test,msg])=>{const el=document.getElementById(id),err=document.getElementById('err-'+id);if(!test(el.value)){el.classList.add('error');err.textContent=msg;ok=false;}else{el.classList.remove('error');err.textContent='';}});if(ok)goToFStep(3);}
 const uploadZone=document.getElementById('uploadZone');
 uploadZone.addEventListener('dragover',e=>{e.preventDefault();uploadZone.classList.add('drag-over');});
 uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('drag-over'));
 uploadZone.addEventListener('drop',e=>{e.preventDefault();uploadZone.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)processFile(f);});
-
 function handleFile(input){if(input.files[0])processFile(input.files[0]);}
-
-function processFile(file){
-  if(file.type!=='application/pdf'){document.getElementById('err-resume').textContent='Only PDF files are accepted.';return;}
-  if(file.size>10*1024*1024){document.getElementById('err-resume').textContent='File must be under 10MB.';return;}
-  resumeFileName=file.name;
-  document.getElementById('fileName').textContent=file.name;
-  document.getElementById('filePreview').classList.add('show');
-  document.getElementById('err-resume').textContent='';
-  const reader=new FileReader();
-  reader.onload=e=>{resumeBase64=e.target.result.split(',')[1];};
-  reader.readAsDataURL(file);
-}
-
-function removeFile(){
-  resumeBase64=null;resumeFileName=null;
-  document.getElementById('filePreview').classList.remove('show');
-  document.getElementById('resumeInput').value='';
-}
-
-async function submitForm(){
-  let ok=true;
-  const checks=[['jobTitle',v=>v.trim().length>1,'Job title is required'],['city',v=>v.trim().length>1,'City is required']];
-  checks.forEach(([id,test,msg])=>{
-    const el=document.getElementById(id),err=document.getElementById('err-'+id);
-    if(!test(el.value)){el.classList.add('error');err.textContent=msg;ok=false;}
-    else{el.classList.remove('error');err.textContent='';}
-  });
-  if(!resumeBase64){document.getElementById('err-resume').textContent='Please upload your resume.';ok=false;}
-  if(!ok)return;
-  const btn=document.getElementById('submitBtn'),label=document.getElementById('submitLabel'),arrow=document.getElementById('submitArrow');
-  btn.disabled=true;label.textContent='Sending…';
-  arrow.outerHTML='<div class="spinner" id="submitArrow"></div>';
-  const payload={firstName:document.getElementById('firstName').value.trim(),lastName:document.getElementById('lastName').value.trim(),email:document.getElementById('email').value.trim(),phone:'+92'+document.getElementById('phone').value.trim(),jobTitle:document.getElementById('jobTitle').value.trim(),city:document.getElementById('city').value.trim(),resumeBase64,resumeFileName,gmailAccessToken,gmailEmail:gmailUserEmail,submittedAt:new Date().toISOString()};
-  try{
-    const res=await fetch(N8N_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!res.ok)throw new Error('Webhook returned '+res.status);
-    document.getElementById('progressBar').style.display='none';
-    document.getElementById('step3').classList.remove('active');
-    const ps=document.getElementById('payment-screen');
-    ps.classList.add('show');
-  }catch(err){
-    console.error(err);
-    btn.disabled=false;
-    document.getElementById('submitLabel').textContent='Submit & Pay';
-    document.getElementById('submitArrow').outerHTML=`<svg id="submitArrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>`;
-    alert('❌ Submission failed.\n\nMake sure your n8n webhook is active.\n\nError: '+err.message);
-  }
-}
-
-function resetForm(){
-  gmailAccessToken=null;gmailUserEmail=null;resumeBase64=null;resumeFileName=null;currentStep=1;
-  ['firstName','lastName','email','phone','jobTitle','city'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('error');});
-  ['firstName','lastName','email','phone','jobTitle','city','resume'].forEach(id=>{const e=document.getElementById('err-'+id);if(e)e.textContent='';});
-  removeFile();
-  document.getElementById('connectedBadge').classList.remove('show');
-  document.getElementById('gmailBtn').classList.remove('connected');
-  document.querySelector('#gmailBtn .btn-text').textContent='Continue with Gmail';
-  document.getElementById('nextStep1Btn').disabled=true;
-  document.getElementById('payment-screen').classList.remove('show');
-  document.getElementById('progressBar').style.display='flex';
-  document.getElementById('step1').classList.add('active');
-  updateProgress();
-}
-
+function processFile(file){if(file.type!=='application/pdf'){document.getElementById('err-resume').textContent='Only PDF files are accepted.';return;}if(file.size>10*1024*1024){document.getElementById('err-resume').textContent='File must be under 10MB.';return;}resumeFileName=file.name;document.getElementById('fileName').textContent=file.name;document.getElementById('filePreview').classList.add('show');document.getElementById('err-resume').textContent='';const reader=new FileReader();reader.onload=e=>{resumeBase64=e.target.result.split(',')[1];};reader.readAsDataURL(file);}
+function removeFile(){resumeBase64=null;resumeFileName=null;document.getElementById('filePreview').classList.remove('show');document.getElementById('resumeInput').value='';}
+async function submitForm(){let ok=true;const checks=[['jobTitle',v=>v.trim().length>1,'Job title is required'],['city',v=>v.trim().length>1,'City is required']];checks.forEach(([id,test,msg])=>{const el=document.getElementById(id),err=document.getElementById('err-'+id);if(!test(el.value)){el.classList.add('error');err.textContent=msg;ok=false;}else{el.classList.remove('error');err.textContent='';}});if(!resumeBase64){document.getElementById('err-resume').textContent='Please upload your resume.';ok=false;}if(!ok)return;const btn=document.getElementById('submitBtn'),label=document.getElementById('submitLabel'),arrow=document.getElementById('submitArrow');btn.disabled=true;label.textContent='Sending…';arrow.outerHTML='<div class="spinner" id="submitArrow"></div>';const payload={firstName:document.getElementById('firstName').value.trim(),lastName:document.getElementById('lastName').value.trim(),email:document.getElementById('email').value.trim(),phone:'+92'+document.getElementById('phone').value.trim(),jobTitle:document.getElementById('jobTitle').value.trim(),city:document.getElementById('city').value.trim(),resumeBase64,resumeFileName,gmailAccessToken,gmailEmail:gmailUserEmail,submittedAt:new Date().toISOString()};try{const res=await fetch(N8N_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!res.ok)throw new Error('Webhook returned '+res.status);document.getElementById('progressBar').style.display='none';document.getElementById('fstep3').classList.remove('active');document.getElementById('payment-screen').classList.add('show');}catch(err){console.error(err);btn.disabled=false;document.getElementById('submitLabel').textContent='Submit & Pay';document.getElementById('submitArrow').outerHTML='<svg id="submitArrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>';alert('❌ Submission failed.\n\nMake sure your n8n webhook is active.\n\nError: '+err.message);}}
+function resetForm(){gmailAccessToken=null;gmailUserEmail=null;resumeBase64=null;resumeFileName=null;currentStep=1;['firstName','lastName','email','phone','jobTitle','city'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('error');});['firstName','lastName','email','phone','jobTitle','city','resume'].forEach(id=>{const e=document.getElementById('err-'+id);if(e)e.textContent='';});removeFile();document.getElementById('connectedBadge').classList.remove('show');document.getElementById('gmailBtn').classList.remove('connected');document.querySelector('#gmailBtn .btn-text').textContent='Continue with Gmail';document.getElementById('nextStep1Btn').disabled=true;document.getElementById('payment-screen').classList.remove('show');document.getElementById('progressBar').style.display='flex';document.getElementById('fstep1').classList.add('active');updateProgress();}
 initGoogleClient();
 </script>
 </body>
